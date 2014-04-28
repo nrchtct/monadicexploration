@@ -1,0 +1,477 @@
+body {
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+	font-family: "HelveticaNeueLight", "HelveticaNeue-Light", "Helvetica Neue Light", "HelveticaNeue", "Helvetica Neue", 'TeXGyreHerosRegular', "Arial", sans-serif;
+	font-weight: 200; font-stretch: normal;
+	color: #000;
+	width: 1000px;
+	height: 1000px;
+}
+
+body.noscroll {
+	overflow: hidden !important;	
+}
+
+* { 
+	xuser-select: none;
+}
+
+
+div {
+	width: 0;
+	height: 0;
+}
+
+div header, div h1, div h2, div img {
+	display: block;
+ 	position: absolute;
+	opacity: 0;
+	cursor: default;
+}
+
+div, div header, div h1, div h2, div p, div em, .overlay {
+	transition-property: top, left, width, height, border-radius, opacity, transform, font-size, color, background-color, line-height;
+	transition-duration: 1s;
+	transition-timing-function: ease-in-out;
+}
+
+div h1 a {
+	text-decoration: none;
+	transition-property: background, opacity;
+	transition-duration: .5s;
+	transition-delay: 0;
+	transition-timing-function: ease-in-out;
+}
+
+div header {
+	border-radius: 50%;
+	background-size: 0% auto;	
+	opacity: 0;
+}
+
+.sheet header.overicon:hover { 
+	cursor: pointer; 
+	background-image: url("cross.svg") !important;
+}
+
+div h1, div header { opacity: 0; }
+
+#info { z-index: 20; }
+
+#about.active, #about.active div { z-index: 15; }
+#feedback.active, #feedback.active div { z-index: 15; }
+.bg 							{ z-index: 14; }
+
+#hint 						{ z-index: 9; }
+#feedback 				{ z-index: 1; }
+#about 						{ z-index: 1; }
+
+div.hover header { 	z-index: 13; }
+div.hover h1 { 	z-index: 12; }
+
+div.sheet h1 {  z-index: 11; }
+
+div.sheet p { 	z-index: 10; }
+div.sheet h2 { 	z-index: 10; }
+
+div header { 	z-index: 10; 	}
+div.active h1 { z-index: 10	 ; 	}
+div.active:hover h1 { z-index: 11	 ; 	}
+div h1 { 			z-index: 11; 	}
+div img { 		z-index: 7; 	}
+div p { 			z-index: 6; 	}
+div h2 { 			z-index: 4; 	}
+
+#canvas { z-index: 3;}
+
+xdiv.hidden h1 { z-index: 0; }
+
+div.stage, div.stage * {
+	z-index: 0 !important;
+	opacity: 0 !important;
+	transition-property: none !important;
+	cursor: default !important;
+}
+
+/* OPACITIES */
+div {opacity: 1;}
+div header {opacity: 1;}
+div.shown h1, div.brush h1, div.shown header {opacity: 1;}
+
+div.shown:not(.linked):not(.sheet):not(:hover) h1 a {opacity: .33;}
+div.blur h1 a {opacity: .33;}
+div.brush h1 a {opacity: 1 !important;}
+
+div.sheet h2 {opacity: 1;}
+div.sheet header em {opacity: 1;}
+
+.noani, .noani * { 
+	transition-property: none !important;
+}
+
+div.added, div.toberemoved {
+/*	transition-property: none !important;*/
+	display: none;
+/*	opacity: 0;*/
+}
+
+
+div header, div h1 { cursor: pointer; }
+div.sheet header em {	overflow: visible; }
+div.sheet header, div.sheet h1 {cursor: default;}
+
+
+div.hover header, div.hover h1 {
+	transition-duration: 0s;
+}
+
+div h1, div h2 {
+	font-family: "HelveticaNeueLight", "HelveticaNeue-Light", "Helvetica Neue Light", "HelveticaNeue", "Helvetica Neue", 'TeXGyreHerosRegular', "Arial", sans-serif;
+	font-weight: 200; font-stretch: normal;
+}
+
+div h1 {
+	margin: 0;
+	padding: 0;
+	white-space: nowrap;	
+	text-shadow: 	0em 0em 0.5em #fff;	
+	xmax-width: 200px;
+	xtext-overflow: ellipsis;		
+	
+}
+
+div.sheet h1 a:hover {
+	background-color: white;
+}
+
+div h1 a {
+	display: block;
+	line-height: 1em;
+	border-radius: 1em;
+	padding: 0 .25em;
+	margin: -.5em -.25em 0 -.25em;
+	xmargin-top: -.5em;
+	xmax-width: 300px;
+	xwhite-space: nowrap;
+	xoverflow: hidden;
+	xtext-overflow: ellipsis;		
+}
+
+div h1 a:hover, div h1:hover a {
+	xmax-width: 1000px !important;
+	xoverflow: visible;
+}
+
+div.hover h1 a {
+	text-decoration: underline;
+	background-color: rgba(255,255,255,.75) !important;
+}
+
+div h2 {
+	text-align: left;
+	float: left;
+	xoverflow: hidden;
+	xtext-overflow: ellipsis;
+}
+
+
+div.sheet h1 a {
+	font-weight: bold;
+	border-radius: 1em;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	background: transparent !important;	
+	padding: .25em;
+	margin: -.75em -.25em 0 -.25em;
+}
+
+
+div.sheet h1 a:hover {
+	overflow: visible;
+	text-overflow: ellipsis;
+	text-decoration: underline;
+	cursor: pointer;
+}
+
+div.sheet p {
+	transition-property: opacity;
+	transition-duration: .75s;
+	transition-delay: 1.5s;
+	background: #fff;
+}
+
+
+div.sheet.left a  { transform: translate(50%, 0); }
+div.sheet.right a { transform: translate(-50%, 0); }
+
+
+div.sheet header {
+	background-size: 100% auto;
+}
+
+div.sheet header em {
+	display: block;
+	opacity: 1	;
+	width: 100px;
+}
+
+div header em {
+	opacity: 0;	
+	width: 0;
+	font-style: normal;
+	display: block;
+	position: relative;	
+	white-space: nowrap;
+	overflow: hidden;
+}
+
+
+div h2, div p {
+	text-align: left;
+}
+
+
+div.hover h1 {
+	opacity: 1 !important;
+}
+
+div.brush h1 {
+	opacity: 1 !important;
+}
+
+
+div.hidden {
+	xdisplay: none;	
+}
+
+div.hidden h1, div.hidden header {
+	xopacity: 0;
+}
+
+body div.tobehidden {
+	opacity: 0;
+	transition-property: opacity;
+	transition-duration: .5s;	
+	transition-timing-function: ease-in-out;		
+}
+
+body div.tobeshown {
+	display: block;
+	opacity: 0;
+	transition-property: opacity;
+	transition-duration: .5s;	
+	transition-timing-function: ease-in-out;		
+}
+
+figure {
+	position: absolute;
+	opacity: 0;
+	margin: 0;
+	padding: 0;
+	transition-property: opacity, left, top, width;
+	transition-duration: 1s;
+	transition-timing-function: ease-in-out;
+}
+
+figure img {
+	width: 100%;
+	margin-bottom: .5em;
+}
+
+figcaption {
+	color: #777;
+	opacity: 0;
+	transition-property: opacity;
+	transition-duration: 1s;
+	transition-delay: 1s;
+	transition-timing-function: ease-in-out;	
+}
+
+#canvas, #canvas.noani {
+	width: 100%;
+	height: 100%;
+	left: 0;
+	top: 0;
+	position: fixed;
+	transition-property: opacity;
+	transition-duration: 1s !important;	
+	transition-timing-function: ease-in-out;		
+}
+
+
+h2 span:hover, h2 a:hover {	
+	text-decoration: none;	
+	color: #555;
+	background-color: #eee;
+}
+
+h2 span, h2 a {	
+	text-decoration: none;	
+	color: #999;	
+	line-height: 2.5em;
+	cursor: pointer;
+	margin-left: -.25em;
+	margin-right: .5em;
+	padding: 0em .25em 0.1em 0.25em;
+	border-radius: 1em;
+	background-color: #fff;
+	
+}
+
+.mn_context h2 span.start { opacity: 1 !important; }
+.mn_context h2 span.end, .mn_network h2 span.end {	 opacity: 0; z-index: 0;}
+.mn_context h2 span.start:after {
+	content: ' …';
+	font-size: .8em;
+}
+
+
+/* overlays */
+
+.overlay, .bg {
+	opacity: 0;
+	position: absolute;
+	transition-property: opacity  !important;
+	transition-duration: 0s !important;
+	transition-timing-function: ease-in-out;	
+}
+
+
+#hint {
+	text-align: center;
+	font-style: italic;
+	color: #aaa;
+	opacity: 0;
+	transition-property: opacity !important;
+	transition-duration: .5s !important;
+}
+
+.overlay.active .bg {
+	display: block;
+	background-color: rgba(255,255,255,.75);
+}
+
+#hint.active, #about.active, #feedback.active { opacity: 1; }
+
+.overlay.active * { opacity: 1; }
+
+.overlay h1, .overlay p {
+	transition-duration: 0;
+	position: relative;
+}
+
+.overlay img {
+	position: relative;
+	display: inline;
+	float: right !important;
+}
+
+.overlay h1 {
+	cursor: default;
+	font-size: 1.5em;
+}
+
+#feedback textarea {
+	width: 99%;
+	height: 66%;
+	border: 1px solid #999;
+	font-family: "HelveticaNeue", "HelveticaNeue", "Helvetica Neue", 'TeXGyreHerosRegular', "Arial", sans-serif;
+	font-weight: normal;
+	xuser-select: auto; 
+}
+
+#feedback input {
+	margin: 1em 0;
+	display: block;
+	font-size: 1.5em;
+}
+
+#feedback_thanks {
+	display: none;
+	font-style: italic;
+	color: #aaa;	
+	line-height: 10em;
+	font-size: 1.5em;
+/*	font-family: "HelveticaNeue", "HelveticaNeue", "Helvetica Neue", 'TeXGyreHerosRegular', "Arial", sans-serif;
+	font-weight: normal;	
+*/	text-align: center;
+}
+
+body div h2.close {	
+	font-family: "HelveticaNeue", "HelveticaNeue", "Helvetica Neue", 'TeXGyreHerosRegular', "Arial", sans-serif;
+	font-weight: normal;	
+	
+	position: absolute;
+	right: 25px;
+	text-align: center;
+	opacity: 1 !important;
+	color: #999;
+	width: 1.25em;
+	height: 1.25em;
+	line-height: 1.25em;
+	font-size: 1.75em;
+	margin: 0;
+	padding: 0;
+	margin-top: -25px;
+	margin-right: -25px;
+	transition-duration: 0s;
+}
+
+body div h2.close:hover {
+	color: #000;
+	cursor: pointer;
+	opacity: 1 !important;
+}
+
+#feedback_text {
+	z-index: 100;
+}
+
+#info {
+	padding: 5px 0 0 10px;
+	opacity: 1;
+	overflow: hidden;
+	position: fixed;
+	top: 0px;
+	left: 0px;
+	cursor: default;
+}
+
+#info h1 {
+	margin: 0 0 5px; padding: 0;
+	font-weight: normal;
+}
+
+#info h1 span, #info h1 span a {color: #999;}
+
+#info h1 a { color: #000; text-decoration: none; }
+#info h1 a:hover { text-decoration: underline; }
+
+
+#info li { padding: 0; margin: 0 0 2px 0; cursor: pointer;}
+#info ul { margin: 0; padding: 0; }
+#info li { list-style-type: none; }
+
+#info li.filtered span { opacity: 0; }
+
+#info li.filtered a { 	color: #aaa; }
+
+#info li:hover a, #info li.filtered a {
+	text-decoration: line-through;
+}
+
+#info li.filtered:hover a {
+	text-decoration: none;
+}
+
+#info li a {
+	padding: 0 0.25em 0 0.25em;
+	border: 0px solid #999; border-radius: 1em;
+	transition-property: background-color;
+	transition-duration: .5s;
+	transition-timing-function: ease-in-out;
+}
+
+
