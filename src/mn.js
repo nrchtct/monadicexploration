@@ -238,10 +238,27 @@ function MonadicNomad() {
 			
 		}
 		else {
-			var hashA = this.hash.split(":");
+			// check if it is a url			
+			var id = undefined;
+			var filtered = [];
 			
-			var id = hashA[0];
-			var filtered = hashA[1];
+			var hashU = this.hash.split("#").pop();			
+			var hashURLencoded = decodeURIComponent(hashU);
+			var urlisamongnodes = false;
+			for (var i = 0; i < this.nodes.length; i++) {
+				if (this.nodes[i].url==hashURLencoded) {
+					urlisamongnodes = true;
+					id = this.nodes[i].id
+					break;
+				}
+			}
+			
+			// if it's not a URL, check for ID
+			if (urlisamongnodes==false) {
+				hashA = this.hash.split(":");
+				id = hashA[0];
+				if (hashA.length>1) filtered = hashA[1];
+			}
 			
 			if (typeof this.Nodes[id] !== "undefined") this.selected = id;
 			else this.selected = -1;
@@ -251,6 +268,8 @@ function MonadicNomad() {
 				this.filtered = "";
 				for (var i = 0; i < app.node_types.length; i++) this.filtered = this.filtered + "0";				
 			}
+			
+			console.log(this.filtered, this.selected);
 		}
 
 		// fill legend
