@@ -742,7 +742,7 @@ function MonadicNomad() {
 		}
 
 		// linked to active node
-		if (pid!=-1) {
+		if (pid!=-1 && pid!=-2) {
 			for (var i=0; i < this.Nodes[pid].links.length; i+=1) {
 				this.Nodes[ this.Nodes[pid].links[i] ].linked = true;
 				this.Nodes[ this.Nodes[pid].links[i] ].shown = true;
