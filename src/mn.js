@@ -39,8 +39,9 @@ function MonadicNomad() {
 				var links = rows[i].links.trim().split(" ");
 				var linksA = [];
 				for (var j = 0; j < links.length; j++) {
-					var linkid = parseInt(links[j]);
-					if (!isNaN(linkid)) linksA.push(linkid);
+					var linkid = links[j];
+					// if (!isNaN(linkid))
+					linksA.push(linkid);
 				}
 				rows[i].links = linksA;
 				if (rows[i].id!="") data.push(rows[i]);
@@ -52,7 +53,6 @@ function MonadicNomad() {
 			that.init(data);
 		});
 		else if (type=="js")  jQuery.getScript("app/"+app.dataFile, function(){
-			console.log("js")
 			that.init(data);
 		});
 
@@ -359,10 +359,28 @@ function MonadicNomad() {
 		this.valsum = {'-1': 0};
 		this.spreads['-1'] = {};
 
-		// make Nodes object
+		// make Nodes object/ nodes array
 		for (var i=0; i < nodes.length; i+=1) {
 			var node = nodes[i];
+			this.nodes.push(node);
+			this.Nodes[node.id] = node;
+			this.spreads[node.id] = {};
+		}
+		
+		// mirror links
+		for (var i = 0; i < this.nodes.length; i++) {
+			var id = this.nodes[i].id;
+			for (var j = 0; j < this.nodes[i].links.length; j++) {
+				var id2 = this.nodes[i].links[j];
+				if (typeof this.Nodes[id2] === "undefined") continue;
+				if (this.Nodes[id2].links.indexOf(id)==-1) this.Nodes[id2].links.push(id);
+			}
+		}
 
+		// make Nodes object
+		for (var i=0; i < this.nodes.length; i+=1) {
+			var node = this.nodes[i];
+			
 			node.color = app.node_types[node.type].color;
 			node.type_text = app.node_types[node.type].name;
 
@@ -372,10 +390,6 @@ function MonadicNomad() {
 			this.valmax['-1'] = Math.max(this.valmax['-1'], node.deg);
 			this.valsum['-1'] += node.deg;
 			this.spreads['-1'][node.id] = node.deg;
-
-			this.nodes.push(node);
-			this.Nodes[node.id] = node;
-			this.spreads[node.id] = {};
 		}
 
 		// generate spreads object
@@ -392,15 +406,6 @@ function MonadicNomad() {
 				if (typeof this.Nodes[this.nodes[i].links[l]] !== "undefined") actuallinks.push( this.nodes[i].links[l] );
 			}
 			this.nodes[i].links = actuallinks;
-		}
-
-		// mirror links
-		for (var i = 0; i < this.nodes.length; i++) {
-			var id = this.nodes[i].id;
-			for (var j = 0; j < this.nodes[i].links.length; j++) {
-				var id2 = this.nodes[i].links[j];
-				if (this.Nodes[id2].links.indexOf(id)==-1) this.Nodes[id2].links.push(id);
-			}
 		}
 
 		// spread the spread
@@ -699,7 +704,7 @@ function MonadicNomad() {
 		// search
 		if (pid==-1 && that.query.length>0 && typeof that.spreads['-2'] !== "undefined") pid = '-2';
 
-		if (pid<0) $("#search").focus();
+		if (pid==-1 || pid =="-2") $("#search").focus();
 
 		// LAYOUT
 
@@ -737,7 +742,7 @@ function MonadicNomad() {
 		}
 
 		// linked to active node
-		if (pid>=0) {
+		if (pid!=-1) {
 			for (var i=0; i < this.Nodes[pid].links.length; i+=1) {
 				this.Nodes[ this.Nodes[pid].links[i] ].linked = true;
 				this.Nodes[ this.Nodes[pid].links[i] ].shown = true;
