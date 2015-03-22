@@ -268,8 +268,6 @@ function MonadicNomad() {
 				this.filtered = "";
 				for (var i = 0; i < app.node_types.length; i++) this.filtered = this.filtered + "0";				
 			}
-			
-			console.log(this.filtered, this.selected);
 		}
 
 		// fill legend
@@ -526,7 +524,9 @@ function MonadicNomad() {
 
 	// hover over element
 	this.peek = function(id, start) {
-
+		
+		
+		
 		$(".noani").removeClass("noani");
 
 		// ignore staged elements
@@ -555,15 +555,15 @@ function MonadicNomad() {
 			
 			$("#info li#t"+node.type).addClass("brush");
 			
-			$("#n"+id).addClass("hover");
+			$("#n_"+id).addClass("hover");
 
 			if (typeof node !== "undefined") {
 
 				for (var i=0; i < this.nodes.length; i+=1) {
 					var node2 = this.nodes[i];
 					var id2 = node2.id;
-					if (node.links.indexOf(id2)>-1) $("#n"+id2).addClass("brush");
-					else if (node2.shown && id!=id2) $("#n"+id2).addClass("blur");
+					if (node.links.indexOf(id2)>-1) $("#n_"+id2).addClass("brush");
+					else if (node2.shown && id!=id2) $("#n_"+id2).addClass("blur");
 				}
 			}
 		}
@@ -593,13 +593,13 @@ function MonadicNomad() {
 
 			// remove filtered element
 			if (this.isFiltered(node)) {
-				if ($("#n"+id).length>0) {
-					$("#n"+id).remove(); 
-					$("#n_"+id).remove();
+				if ($("#n_"+id).length>0) {
+					$("#n_"+id).remove(); 
+					$("#n__"+id).remove();
 				}
 			}
 			// insert element
-			else if ($("#n"+id).length==0) {
+			else if ($("#n_"+id).length==0) {
 
 				var text = shorten(node.text, 200, "");
 				
@@ -614,21 +614,21 @@ function MonadicNomad() {
 
 				var type_slug = app.node_types[node.type].slug;
 				var type_name = app.node_types[node.type].name;
-				var shown = "<div  id='n"+id+"' class='node added noani "+type_slug+"'><header><em>"+type_name+"</em></header>"+h1+h2+"</div>";
-				var stage = "<div  id='n_"+id+"' class='node stage "+type_slug+"'>"+h1+"</div>";
+				var shown = "<div  id='n_"+id+"' class='node added noani "+type_slug+"'><header><em>"+type_name+"</em></header>"+h1+h2+"</div>";
+				var stage = "<div  id='n__"+id+"' class='node stage "+type_slug+"'>"+h1+"</div>";
 
 				$('body').append(shown);
 				$('body').append(stage);
 
-				node.el = $("#n"+id);
-				node.el_ = $("#n_"+id);
+				node.el = $("#n_"+id);
+				node.el_ = $("#n__"+id);
 
 				// for teaser
 				node.lh = this.interval(node.text.length, 0, 300, 2, 0.75);
 			}
 
-			if (typeof node.el === "undefined") node.el = $("#n"+id);
-			if (typeof node.el_ === "undefined") node.el_ = $("#n_"+id);
+			if (typeof node.el === "undefined") node.el = $("#n_"+id);
+			if (typeof node.el_ === "undefined") node.el_ = $("#n__"+id);
 
 			// if (typeof node.width === "undefined") {
 			node.el_.css({'font-size': this.fs});
@@ -637,7 +637,7 @@ function MonadicNomad() {
 
 		// events
 		$("div.node header, div.node h1").unbind().click(function(e){
-			var id = $(this).parent().attr('id').split("n")[1];
+			var id = $(this).parent().attr('id').split("n_")[1];
 			
 			if (that.selected!=id) {
 				e.preventDefault();
@@ -653,9 +653,9 @@ function MonadicNomad() {
 		} );
 
 		$("div.node header, div.node h1").hover(function(){
-			that.peek($(this).parent().attr('id').split("n")[1], true);
+			that.peek($(this).parent().attr('id').split("n_")[1], true);
 		}, function(){
-			that.peek($(this).parent().attr('id').split("n")[1]);
+			that.peek($(this).parent().attr('id').split("n_")[1]);
 		});
 
 	}
