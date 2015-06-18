@@ -451,17 +451,29 @@ function MonadicNomad() {
 			}
 		}
 
-		this.nodes.sort(function(a, b){
+		this.sort(true);
 
-			if (a.type<b.type) return -1;
-			else if (a.type>b.type) return 1;
-			else {
-				if (a.title<b.title) return -1
+	}
+
+	this.sort = function(bytype) {
+		
+		if (bytype) {
+			this.nodes.sort(function(a, b){
+				if (a.type<b.type) return -1;
+				else if (a.type>b.type) return 1;
+				else {
+					if (a.title<b.title) return -1
+					else return 1;
+				}
+			});
+		}
+		else {
+			this.nodes.sort(function(a, b){
+				if (a.title<b.title) return -1;
 				else return 1;
-			}
-
-		});
-
+			});			
+		}
+		
 	}
 
 	// mapping function
@@ -606,15 +618,15 @@ function MonadicNomad() {
 			// insert element
 			else if ($("#n_"+id).length==0) {
 
-				var text = shorten(node.text, 200, "");
+				var text = shorten(node.text, 200, " …");
 				
 				if (typeof node.url === 'undefined' || node.url=='') {
 					var h1 = "<h1><a>"+shorten(node.title, 50)+"</a></h1>";
-					var h2 = "<h2>"+text+" …</h2>";
+					var h2 = "<h2>"+text+"</h2>";
 				}
 				else {
 					var h1 = "<h1><a href='"+node.url+"'>"+shorten(node.title, 50)+"</a></h1>";
-					var h2 = "<h2>"+text+" …</h2>";
+					var h2 = "<h2>"+text+"</h2>";
 				}
 
 				var type_slug = app.node_types[node.type].slug;
