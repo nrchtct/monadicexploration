@@ -23,12 +23,10 @@ function MonadicNomad() {
 
 	// get data
 	this.load = function() {
+		
 		var that = this;
 
-		var file = app.dataFile.split(".");
-		var type = file.pop().toLowerCase();
-
-		if (type=="csv") jQuery.get("app/"+app.dataFile, function(data){
+		if (app.dataType=="csv") jQuery.get(app.dataFile, function(data){
 
 			data = $.parse(data);
 
@@ -49,12 +47,15 @@ function MonadicNomad() {
 
 			that.init(data);
 		});
-		else if (type=="json") jQuery.getJSON("app/"+app.dataFile, function(data){
+		else if (app.dataType=="json") jQuery.getJSON(app.dataFile, function(data){
 			that.init(data);
 		});
-		else if (type=="js")  jQuery.getScript("app/"+app.dataFile, function(){
+		else if (app.dataType=="js")  jQuery.getScript(app.dataFile, function(){
 			that.init(data);
 		});
+		
+
+
 
 	}
 
@@ -276,11 +277,11 @@ function MonadicNomad() {
 		if (app.showType) {
 			for (var i = 0; i < app.node_types.length; i++) {
 				var type = app.node_types[i];			
-				$("#info ul").append("<li id='t"+i+"'><span>•</span><a>"+type.names+"</a></li>");
+				$("#info ul").append("<li id='t"+i+"'><a>"+type.names+"</a></li>");
 				$("#info li#t"+i).css({color: type.color});
 					
 				if (that.filtered.charAt(i)=="1") $("#info li#t"+i).addClass("filtered");
-				
+								
 				$("#info li#t"+i).click(function(){
 					var id = parseInt($(this).attr("id").split("t")[1]);
 					var newfiltered = "";					
@@ -541,8 +542,6 @@ function MonadicNomad() {
 
 	// hover over element
 	this.peek = function(id, start) {
-		
-		
 		
 		$(".noani").removeClass("noani");
 

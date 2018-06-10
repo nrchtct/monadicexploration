@@ -8,7 +8,9 @@ app.node_types = [
 	{slug: 'bt_practitioner', name: 'Practitioner', names: 'Practitioners', color: '#5F41A3' }
 ];
 
-app.dataFile 	= 'data.json';
+//	dataType: js, json, csv
+app.dataType 	= 'json';
+app.dataFile 	= 'app/data.json';
 app.showType 	= true;
 app.title 		= "Beautiful Trouble";
 app.url 			= "http://beautifultrouble.org/";
